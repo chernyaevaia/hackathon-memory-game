@@ -1,5 +1,5 @@
 .App {
-  max-width: 660px;
+  max-width: 760px;
   margin: 40px auto;
 }
 button {
@@ -21,4 +21,11 @@ button:hover {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 20px;
+}
+
+.game-topbar {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  column-gap: 50px;
 }

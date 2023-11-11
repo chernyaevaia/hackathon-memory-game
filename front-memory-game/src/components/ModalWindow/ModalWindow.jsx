@@ -1,7 +1,7 @@
 import ReactDom from "react-dom";
 import styles from "./ModalWindow.module.css";
 
-export default function ModalWindow({ open, onClose }) {
+export default function ModalWindow({ text, open, onClose }) {
   if (!open) return null;
 
   return ReactDom.createPortal(
@@ -12,8 +12,8 @@ export default function ModalWindow({ open, onClose }) {
           e.stopPropagation();
         }}
       >
-        <p>Поздравляем! Вы выиграли!</p>
-        <button onClick={onClose}>Close Modal</button>
+        <p>{text}</p>
+        <button onClick={onClose}>Закрыть</button>
       </div>
     </div>,
     document.getElementById("portal")

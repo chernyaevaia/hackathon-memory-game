@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import SingleCard from "./components/SingleCard/SingleCard";
 import ModalWindow from "./components/ModalWindow/ModalWindow";
-import { Radio } from "antd";
+import SettingsPanel from "./components/SettingsPanel/SettingsPanel";
 
 const cardImages = [
   {
@@ -17,43 +17,42 @@ const cardImages = [
     src: "src/img/free-icon-family-6163184.png",
     matched: false,
   },
-  {
-    src: "src/img/free-icon-family-6385186.png",
-    matched: false,
-  },
-  {
-    src: "src/img/free-icon-parenting-11777542.png",
-    matched: false,
-  },
-  {
-    src: "src/img/free-icon-family-life-3452380.png",
-    matched: false,
-  },
-  {
-    src: "src/img/free-icon-family-6589348.png",
-    matched: false,
-  },
-  {
-    src: "src/img/free-icon-family-11009818.png",
-    matched: false,
-  },
-];
-
-const timeControlOptions = [
-  { label: "без таймера", value: 0 },
-  { label: "3 минуты", value: 3 },
-  { label: "5 минут", value: 5 },
+  // {
+  //   src: "src/img/free-icon-family-6385186.png",
+  //   matched: false,
+  // },
+  // {
+  //   src: "src/img/free-icon-parenting-11777542.png",
+  //   matched: false,
+  // },
+  // {
+  //   src: "src/img/free-icon-family-life-3452380.png",
+  //   matched: false,
+  // },
+  // {
+  //   src: "src/img/free-icon-family-6589348.png",
+  //   matched: false,
+  // },
+  // {
+  //   src: "src/img/free-icon-family-11009818.png",
+  //   matched: false,
+  // },
 ];
 
 function App() {
+  const [isGameOn, setIsGameOn] = useState(false);
+
   const [cards, setCards] = useState([]);
-  const [turns, setTurns] = useState(0);
+  const [cardsDisabled, setCardsDisabled] = useState(true);
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
-  const [disabled, setDisabled] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [turns, setTurns] = useState(0);
+
   const [timeControl, setTimeControl] = useState(0);
   const [counter, setCounter] = useState(0);
+
+  const [isWinModalOpen, setIsWinModalOpen] = useState(false);
+  const [isFailModalOpen, setIsFailModalOpen] = useState(false);
 
   const shuffleCards = () => {
     const shuffledCards = [...cardImages, ...cardImages]
@@ -65,34 +64,47 @@ function App() {
     setTurns(0);
   };
 
-  const onChangeTimeControl = ({ target: { value } }) => {
-    console.log(value);
-    setTimeControl(value);
-    setCounter(value * 60);
-  };
-
-  const handleChoice = (card) => {
+  const handleСardChoice = (card) => {
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
 
+  const onChangeTimeControl = ({ target: { value } }) => {
+    setTimeControl(value);
+  };
+
+  useEffect(() => {
+    shuffleCards();
+  }, []);
+
+  useEffect(() => {
+    if (isGameOn && counter === 0) {
+      setIsFailModalOpen(true);
+    }
+    const timer =
+      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+    return () => clearInterval(timer);
+  }, [counter]);
+
   useEffect(() => {
     if (choiceOne && choiceTwo) {
-      setDisabled(true);
+      setCardsDisabled(true);
       if (choiceOne.src === choiceTwo.src) {
         setCards((prevCards) => {
-          return prevCards.map((card) => {
+          const matchedCards = prevCards.map((card) => {
             if (card.src === choiceOne.src) {
               return { ...card, matched: true };
             } else {
               return card;
             }
           });
+          const hasUnmatched = matchedCards.filter(
+            (card) => !card.matched
+          ).length;
+          if (hasUnmatched === 0) {
+            setIsWinModalOpen(true);
+          }
+          return matchedCards;
         });
-        const hasUnmatchedCards = cards.find((card) => !card.matched);
-        console.log(hasUnmatchedCards);
-        if (!hasUnmatchedCards) {
-          setIsModalOpen(true);
-        }
         resetTurn();
       } else {
         setTimeout(() => resetTurn(), 1000);
@@ -104,64 +116,74 @@ function App() {
     setChoiceOne(null);
     setChoiceTwo(null);
     setTurns((prevTurns) => prevTurns + 1);
-    setDisabled(false);
+    setCardsDisabled(false);
   };
-
-  useEffect(() => {
-    shuffleCards();
-  }, []);
-
-  useEffect(() => {
-    counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
-  }, [counter]);
 
   return (
     <>
       <div className="App">
         <h1>Family Match</h1>
-        <div className="">
-          <p>Установить таймер:</p>
-          <Radio.Group
-            options={timeControlOptions}
-            onChange={onChangeTimeControl}
-            value={timeControl}
-            optionType="button"
-          />
+        <SettingsPanel
+          onChangeTimeControl={onChangeTimeControl}
+          timeControl={timeControl}
+          disableChoice={isGameOn}
+        />
+        <div className="game-topbar">
+          <p>Turns: {turns}</p>
+          <button
+            onClick={() => {
+              shuffleCards();
+              setIsGameOn(true);
+              setCounter(timeControl * 60);
+              setCardsDisabled(false);
+            }}
+          >
+            {isGameOn ? "Начать заново" : "Начать"}
+          </button>
+
+          {counter !== 0 && isGameOn && (
+            <div>
+              Оставшееся время: {Math.floor(counter / 60)}:{counter % 60}
+            </div>
+          )}
         </div>
-        <button
-          onClick={() => {
-            setDisabled(false);
-          }}
-        >
-          Начать
-        </button>
-        <button
-          onClick={() => {
-            shuffleCards();
-          }}
-        >
-          Начать заново
-        </button>
-        <p>Turns: {turns}</p>
-        {counter !== 0 && (
-          <div>
-            {" "}
-            Оставшееся время: {Math.floor(counter / 60)}:{counter % 60}
-          </div>
-        )}
         <div className="card-grid">
           {cards.map((card) => (
             <SingleCard
               key={card.id}
               card={card}
-              handleChoice={handleChoice}
-              flipped={card === choiceOne || card === choiceTwo || card.matched}
-              disabled={disabled}
+              handleChoice={handleСardChoice}
+              flipped={
+                (card === choiceOne || card === choiceTwo || card.matched) &&
+                isGameOn
+              }
+              disabled={cardsDisabled}
             />
           ))}
         </div>
       </div>
-      <ModalWindow open={isModalOpen} onClose={() => setIsModalOpen(false)} />
+
+      <ModalWindow
+        text="Поздравляем! Вы выиграли!"
+        open={isWinModalOpen}
+        onClose={() => {
+          setTurns(0);
+          setIsWinModalOpen(false);
+          setCardsDisabled(true);
+          setIsGameOn(false);
+        }}
+      />
+
+      <ModalWindow
+        text="Игра закончилась - удачи в следующий раз!"
+        open={isFailModalOpen}
+        onClose={() => {
+          setTurns(0);
+          setIsFailModalOpen(false);
+          setCardsDisabled(true);
+          setIsGameOn(false);
+        }}
+      />
     </>
   );
 }
