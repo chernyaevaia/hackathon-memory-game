@@ -5,6 +5,8 @@ from django.db import models
 
 class Players(models.Model):
     name = models.CharField(max_length=40)
-    password = models.CharField(max_length=30)
     record = models.IntegerField(default=0)
-    email = models.EmailField(default='')
+
+
+    def __str__(self):
+        return f'id {self.id}: {self.name}'

@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-+sbty^(lv7v4prx2tb@czra#5dp@euo!^nu41vs0vklblr&w+*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['80.249.151.135', '127.0.0.1']
 
 
 # Application definition
@@ -87,8 +87,12 @@ WSGI_APPLICATION = 'game.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'memorygame_db',
+        'USER': 'memorygame_user',
+        'PASSWORD': '123456',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 

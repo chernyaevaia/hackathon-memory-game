@@ -5,4 +5,4 @@ from app.models import Players
 class PlayersSerializer(serializers.ModelSerializer):
     class Meta:
         model = Players
-        fields = '__all__'
+        fields = ['name', 'record']
