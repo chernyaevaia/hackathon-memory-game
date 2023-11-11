@@ -1,0 +1,25 @@
+{% extends 'memory/layout.html' %}
+{% block body %}
+
+<h2 class='h-title'>Sign Up!</h2>
+  <button> 
+    <a href="{% url 'loginView'%}">Login</a>
+  </button>
+
+<form method="post" class='signup-form-info'>
+  {% csrf_token %}
+  {% for field in form %}
+    <p>
+      {{ field.label_tag }}<br>
+      {{ field }}
+      {% for error in field.errors %}
+        <p style="color: red">{{ error }}</p>
+      {% endfor %}
+    </p>
+  {% endfor %}
+  <button type="submit">Sign up</button>
+</form>
+</br>
+
+
+{% endblock %}

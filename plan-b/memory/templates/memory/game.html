@@ -1,0 +1,301 @@
+{% extends 'memory/layout.html' %}
+
+
+{% block body %}
+{% load static %}
+<script src="{% static 'js/script.js' %}"></script>
+
+  <div class="overlay-text visible">
+    Click to Start
+  </div>
+  <div id="game-over-text" class="overlay-text">
+    GAME OVER
+    <span class="overlay-text-small">Click to Restart</span>
+  </div>
+  <div id="victory-text" class="overlay-text">
+    VICTORY!!
+    <span class="overlay-text-small">Click to Restart</span>
+    <span class="overlay-text-smaller">or</span>
+    <span class="overlay-text-smaller"><a style="color:white"href="{% url 'leaderboard' %}">LEADERBOARD</a></span>
+  </div>
+  {% for d in data%}
+  <div class="game-container" id="{{user.get_username}}" value={{d.Difficulty}}>
+    <div class="game-info-container">
+      <div class="game-info">
+        Time <span id="time-remaining">100</span>
+      </div>
+      <div class="game-info">
+        Flips <span id="flips">0</span>
+      </div>
+    </div>
+
+
+    {% if d.Difficulty == 'Easy'%}
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/snowflake.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/snowflake.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/shat.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/shat.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/tree.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/tree.png' %}">
+      </div>
+    </div>    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/owl.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/owl.png' %}">
+      </div>
+    </div>
+
+    {% elif d.Difficulty == 'Medium'%}
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/snowflake.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/snowflake.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/shat.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/shat.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/car.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/car.png' %}">
+      </div>
+    </div>
+   <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/tree.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/tree.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/owl.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/owl.png' %}">
+      </div>
+    </div> 
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/gift.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/gift.png' %}">
+      </div>
+    </div>
+
+
+    {% else %}
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/car.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/car.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/elf.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/elf.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/gift.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/gift.png' %}">
+      </div>
+    </div>
+   <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/globle.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/globle.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/owl.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/owl.png' %}">
+      </div>
+    </div> 
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/shat.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/shat.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/snowflake.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/snowflake.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/tree.png' %}">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-back card-face">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="{% static 'images/tree.png' %}">
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  {% endfor %}
+  <div class='btn-group'>
+    <button class="restart-text" onclick="window.location.reload();">Restart</button>
+    </br>
+    <button class="home-text">
+      <a href="/home">Home</a>
+    </button>
+  </div>
+  {% endblock %}

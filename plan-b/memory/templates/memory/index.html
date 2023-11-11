@@ -1,0 +1,24 @@
+{% extends 'memory/layout.html' %}
+
+{% block body %}
+
+{% load static %}
+<script src="{% static 'js/script.js' %}"></script>
+    <h2 class='h-title'>Welcome, {{user.get_username}}!</h2>
+    <button>
+        <a href="{% url "logout" %}?next=/">Logout</a>
+    </button>
+
+    <form method="POST" class='form-info'>
+        {% csrf_token %}
+        {{ form.as_p}}
+        <button type="submit" class="btn btn-primary"><a href="{% url 'game' %}"></a>Start Game</button>
+    </form>
+    </br>
+    <button>
+        <a href="{% url 'leaderboard' %}">Leaderboard</a>
+    </button>
+
+
+
+{% endblock %}

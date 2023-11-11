@@ -1,0 +1,14 @@
+{% extends 'memory/layout.html' %}
+{% block body %}
+
+<form method="post" class='form-info'>
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Log In</button>
+</form>
+</br>
+<button> 
+    <a href="{% url 'signup'%}">Register</a>
+  </button>
+
+{% endblock %}

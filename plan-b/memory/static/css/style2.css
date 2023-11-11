@@ -1,0 +1,30 @@
+.h-title {
+    color:#FFBB89;
+    text-align: center;
+    font-size: 3em;
+
+  }
+
+table {
+    font-family: arial, sans-serif;
+    font-weight: bold;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th{
+    color:  #FFBB89;
+    background-color:  #6e665f;
+
+  }
+
+  td, th {
+    border: 1px solid #080000;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  td {
+    background-color:  #FFBB89;
+  }
+
+
