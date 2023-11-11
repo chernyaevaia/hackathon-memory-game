@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import SingleCard from "./components/SingleCard";
+import SingleCard from "./components/SingleCard/SingleCard";
+import ModalWindow from "./components/ModalWindow/ModalWindow";
 
 const cardImages = [
   {
@@ -43,6 +44,7 @@ function App() {
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
   const [disabled, setDisabled] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const shuffleCards = () => {
     const shuffledCards = [...cardImages, ...cardImages]
@@ -71,6 +73,11 @@ function App() {
             }
           });
         });
+        const hasUnmatchedCards = cards.find((card) => !card.matched);
+        console.log(hasUnmatchedCards);
+        if (!hasUnmatchedCards) {
+          setIsModalOpen(true);
+        }
         resetTurn();
       } else {
         setTimeout(() => resetTurn(), 1000);
@@ -90,22 +97,31 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <h1>Family Match</h1>
-      <button onClick={shuffleCards}>Restart the Game</button>
-      <p>Turns: {turns}</p>
-      <div className="card-grid">
-        {cards.map((card) => (
-          <SingleCard
-            key={card.id}
-            card={card}
-            handleChoice={handleChoice}
-            flipped={card === choiceOne || card === choiceTwo || card.matched}
-            disabled={disabled}
-          />
-        ))}
+    <>
+      <div className="App">
+        <h1>Family Match</h1>
+        <button
+          onClick={() => {
+            shuffleCards();
+          }}
+        >
+          Restart the Game
+        </button>
+        <p>Turns: {turns}</p>
+        <div className="card-grid">
+          {cards.map((card) => (
+            <SingleCard
+              key={card.id}
+              card={card}
+              handleChoice={handleChoice}
+              flipped={card === choiceOne || card === choiceTwo || card.matched}
+              disabled={disabled}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+      <ModalWindow open={isModalOpen} onClose={() => setIsModalOpen(false)} />
+    </>
   );
 }
 
