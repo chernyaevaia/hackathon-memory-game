@@ -1,35 +1,112 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import "./App.css";
+import SingleCard from "./components/SingleCard";
+
+const cardImages = [
+  {
+    src: "front-memory-game/src/img/free-icon-family-3900396.png",
+    matched: false,
+  },
+  {
+    src: "front-memory-game/src/img/free-icon-family-3961230.png",
+    matched: false,
+  },
+  {
+    src: "front-memory-game/src/img/free-icon-family-6163184.png",
+    matched: false,
+  },
+  {
+    src: "front-memory-game/src/img/free-icon-family-6385186.png",
+    matched: false,
+  },
+  {
+    src: "front-memory-game/src/img/free-icon-parenting-11777542.png",
+    matched: false,
+  },
+  {
+    src: "front-memory-game/src/img/free-icon-family-life-3452380.png",
+    matched: false,
+  },
+  {
+    src: "front-memory-game/src/img/free-icon-family-6589348.png",
+    matched: false,
+  },
+  {
+    src: "front-memory-game/src/img/free-icon-family-11009818.png",
+    matched: false,
+  },
+];
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [cards, setCards] = useState([]);
+  const [turns, setTurns] = useState(0);
+  const [choiceOne, setChoiceOne] = useState(null);
+  const [choiceTwo, setChoiceTwo] = useState(null);
+  const [disabled, setDisabled] = useState(false);
+
+  const shuffleCards = () => {
+    const shuffledCards = [...cardImages, ...cardImages]
+      .sort(() => Math.random() - 0.5)
+      .map((card) => ({ ...card, id: Math.random() }));
+    setChoiceOne(null);
+    setChoiceTwo(null);
+    setCards(shuffledCards);
+    setTurns(0);
+  };
+
+  const handleChoice = (card) => {
+    choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
+  };
+
+  useEffect(() => {
+    if (choiceOne && choiceTwo) {
+      setDisabled(true);
+      if (choiceOne.src === choiceTwo.src) {
+        setCards((prevCards) => {
+          return prevCards.map((card) => {
+            if (card.src === choiceOne.src) {
+              return { ...card, matched: true };
+            } else {
+              return card;
+            }
+          });
+        });
+        resetTurn();
+      } else {
+        setTimeout(() => resetTurn(), 1000);
+      }
+    }
+  }, [choiceOne, choiceTwo]);
+
+  const resetTurn = () => {
+    setChoiceOne(null);
+    setChoiceTwo(null);
+    setTurns((prevTurns) => prevTurns + 1);
+    setDisabled(false);
+  };
+
+  useEffect(() => {
+    shuffleCards();
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="App">
+      <h1>Family Match</h1>
+      <button onClick={shuffleCards}>Restart the Game</button>
+      <p>Turns: {turns}</p>
+      <div className="card-grid">
+        {cards.map((card) => (
+          <SingleCard
+            key={card.id}
+            card={card}
+            handleChoice={handleChoice}
+            flipped={card === choiceOne || card === choiceTwo || card.matched}
+            disabled={disabled}
+          />
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
