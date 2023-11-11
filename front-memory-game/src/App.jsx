@@ -17,26 +17,26 @@ const cardImages = [
     src: "src/img/free-icon-family-6163184.png",
     matched: false,
   },
-  // {
-  //   src: "src/img/free-icon-family-6385186.png",
-  //   matched: false,
-  // },
-  // {
-  //   src: "src/img/free-icon-parenting-11777542.png",
-  //   matched: false,
-  // },
-  // {
-  //   src: "src/img/free-icon-family-life-3452380.png",
-  //   matched: false,
-  // },
-  // {
-  //   src: "src/img/free-icon-family-6589348.png",
-  //   matched: false,
-  // },
-  // {
-  //   src: "src/img/free-icon-family-11009818.png",
-  //   matched: false,
-  // },
+  {
+    src: "src/img/free-icon-family-6385186.png",
+    matched: false,
+  },
+  {
+    src: "src/img/free-icon-parenting-11777542.png",
+    matched: false,
+  },
+  {
+    src: "src/img/free-icon-family-life-3452380.png",
+    matched: false,
+  },
+  {
+    src: "src/img/free-icon-family-6589348.png",
+    matched: false,
+  },
+  {
+    src: "src/img/free-icon-family-11009818.png",
+    matched: false,
+  },
 ];
 
 function App() {
