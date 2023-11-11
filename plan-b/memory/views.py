@@ -59,16 +59,17 @@ def home(request):
 
 @csrf_exempt
 def upload(request):
-    # if request.is_ajax(request=request) and request.method =="POST":
-    if request.method == "POST":
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest' and request.method =="POST":
+    #if request.is_ajax(request=request) and request.method =="POST":
+    #if request.method == "POST":
         # print(request.POST.getlist('Name')[0])
         # print(request.POST.getlist('Difficulty')[0])
         # print(request.POST.getlist('flips')[0])
         # print(request.POST.getlist('solvetime')[0])
+        #if LeaderBoard.objects.count() < 10:
         lb = LeaderBoard(Name=request.POST.getlist('Name')[0],Difficulty=request.POST.getlist('Difficulty')[0],flips=request.POST.getlist('flips')[0],timeleft=request.POST.getlist('solvetime')[0])
         lb.save()
     return redirect('game')
-
 
 
 def game(request):

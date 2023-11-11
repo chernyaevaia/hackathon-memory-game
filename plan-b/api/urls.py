@@ -1,10 +1,17 @@
-from django.urls import path
+from django.urls import path, include
 
-from api.views import LeaderBoardListAPIView, AllUserListAPIView
+from rest_framework import routers
+
+from api.views import LeaderBoardModelViewSet, AllUserModelViewSet
 
 app_name = 'api'
 
+routerLead = routers.DefaultRouter()
+routerLead.register(r'leaders', LeaderBoardModelViewSet)
+routerUser = routers.DefaultRouter()
+routerUser.register(r'users', AllUserModelViewSet)
+
 urlpatterns = [
-	path('leaders/', LeaderBoardListAPIView.as_view(), name='leaders'),
-	path('users/', AllUserListAPIView.as_view(), name='users'),
+	path('', include(routerLead.urls)),
+	path('', include(routerUser.urls)),
 ]
