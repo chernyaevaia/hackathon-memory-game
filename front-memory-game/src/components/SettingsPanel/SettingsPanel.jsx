@@ -8,6 +8,13 @@ const timeControlOptions = [
   { label: "5 минут", value: 5 },
 ];
 
+const turnsControlOptions = [
+  { label: "без ограничений", value: 10000000000000000 },
+  { label: "20 ходов", value: 20 },
+  { label: "40 ходов", value: 40 },
+];
+
+
 const fieldSizeOptions = [
   { label: "4x4", value: 16 },
   { label: "4x5", value: 20 },
@@ -24,8 +31,9 @@ export default function SettingsPanel({
   onChangeName,
   onSubmitName,
   showWelcome,
+  onChangeTurnsNumber,
+  turnsNumber
 }) {
-  console.log(showWelcome);
   return (
     <div className={styles.wrapper}>
       {showWelcome ? (
@@ -65,6 +73,16 @@ export default function SettingsPanel({
           options={timeControlOptions}
           onChange={onChangeTimeControl}
           value={timeControl}
+          optionType="button"
+          disabled={disableChoice}
+        />
+      </div>
+      <div>
+        <p>Установить ограничение ходов:</p>
+        <Radio.Group
+          options={turnsControlOptions}
+          onChange={onChangeTurnsNumber}
+          value={turnsNumber}
           optionType="button"
           disabled={disableChoice}
         />

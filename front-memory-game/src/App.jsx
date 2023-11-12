@@ -101,6 +101,8 @@ function App() {
   const [timeControl, setTimeControl] = useState(0);
   const [counter, setCounter] = useState(0);
 
+  const [turnsNumber, setTurnsNumber] = useState(10000000000000000);
+
   const [isWinModalOpen, setIsWinModalOpen] = useState(false);
   const [isFailModalOpen, setIsFailModalOpen] = useState(false);
 
@@ -158,9 +160,15 @@ function App() {
     setFieldSize(value);
   };
 
+  const onChangeTurnsNumber = ({ target: { value } }) => {
+    setTurnsNumber(value);
+  };
+
   const onChangeUserName = ({ target: { value } }) => {
     setUserName(value);
   };
+
+  
 
   const onSubmitName = () => {
     setShowWelcome(true);
@@ -182,6 +190,10 @@ function App() {
       counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
     return () => clearInterval(timer);
   }, [counter]);
+
+  useEffect(() => {
+    if (turns > turnsNumber) setIsFailModalOpen(true)
+  }, [turns]);
 
   useEffect(() => {
     if (choiceOne && choiceTwo) {
@@ -224,6 +236,7 @@ function App() {
       ? "card-grid-20"
       : "card-grid-36";
 
+
   return (
     <>
       <div className="App">
@@ -238,9 +251,11 @@ function App() {
           userName={userName}
           onSubmitName={onSubmitName}
           showWelcome={showWelcome}
+          onChangeTurnsNumber={onChangeTurnsNumber}
+          turnsNumber={turnsNumber}
         />
         <div className="game-topbar">
-          <p>Turns: {turns}</p>
+          <p>Turns: {turns}{(turnsNumber === 20 || turnsNumber === 40)  && ` из ${turnsNumber}`}</p>
           <button
             onClick={() => {
               shuffleCards();
