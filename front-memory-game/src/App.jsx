@@ -18,7 +18,7 @@ const cardImages = [
     matched: false,
   },
   {
-    src: "src/img/family4.jpg",
+    src: "src/img/family19.png",
     matched: false,
   },
   {
@@ -66,7 +66,7 @@ const cardImages = [
     matched: false,
   },
   {
-    src: "src/img/family16.jpg",
+    src: "src/img/family20.png",
     matched: false,
   },
   {
