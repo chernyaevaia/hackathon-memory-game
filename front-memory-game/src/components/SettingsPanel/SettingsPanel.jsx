@@ -21,8 +21,10 @@ const fieldSizeOptions = [
 
 export default function SettingsPanel({
   onChangeTimeControl,
+  onChangeFieldSize,
   timeControl,
   disableChoice,
+  fieldSize,
 }) {
   return (
     <div className={styles.wrapper}>
@@ -30,8 +32,8 @@ export default function SettingsPanel({
         <p>Установить размер поля:</p>
         <Radio.Group
           options={fieldSizeOptions}
-          //   onChange={onChangeTimeControl}
-          //   value={timeControl}
+          onChange={onChangeFieldSize}
+          value={fieldSize}
           optionType="button"
           disabled={disableChoice}
         />

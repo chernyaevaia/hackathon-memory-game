@@ -4,7 +4,7 @@ import SingleCard from "./components/SingleCard/SingleCard";
 import ModalWindow from "./components/ModalWindow/ModalWindow";
 import SettingsPanel from "./components/SettingsPanel/SettingsPanel";
 
-const cardImages = [
+const cardImages16 = [
   {
     src: "src/img/family2.jpg",
     matched: false,
@@ -37,6 +37,20 @@ const cardImages = [
     src: "src/img/family8.jpg",
     matched: false,
   },
+];
+
+const cardImages20 = [
+  {
+    src: "src/img/family17.jpg",
+    matched: false,
+  },
+  {
+    src: "src/img/family18.jpg",
+    matched: false,
+  },
+];
+
+const cardImages36 = [
   {
     src: "src/img/family9.jpg",
     matched: false,
@@ -69,14 +83,6 @@ const cardImages = [
     src: "src/img/family20.png",
     matched: false,
   },
-  {
-    src: "src/img/family17.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family18.jpg",
-    matched: false,
-  },
 ];
 
 function App() {
@@ -88,6 +94,8 @@ function App() {
   const [choiceTwo, setChoiceTwo] = useState(null);
   const [turns, setTurns] = useState(0);
 
+  const [fieldSize, setFieldSize] = useState(16);
+
   const [timeControl, setTimeControl] = useState(0);
   const [counter, setCounter] = useState(0);
 
@@ -95,13 +103,45 @@ function App() {
   const [isFailModalOpen, setIsFailModalOpen] = useState(false);
 
   const shuffleCards = () => {
-    const shuffledCards = [...cardImages, ...cardImages]
-      .sort(() => Math.random() - 0.5)
-      .map((card) => ({ ...card, id: Math.random() }));
-    setChoiceOne(null);
-    setChoiceTwo(null);
-    setCards(shuffledCards);
-    setTurns(0);
+    if (fieldSize === 16) {
+      const shuffledCards = [...cardImages16, ...cardImages16]
+        .sort(() => Math.random() - 0.5)
+        .map((card) => ({ ...card, id: Math.random() }));
+      setChoiceOne(null);
+      setChoiceTwo(null);
+      setCards(shuffledCards);
+      setTurns(0);
+    }
+    if (fieldSize === 20) {
+      const shuffledCards = [
+        ...cardImages16,
+        ...cardImages16,
+        ...cardImages20,
+        ...cardImages20,
+      ]
+        .sort(() => Math.random() - 0.5)
+        .map((card) => ({ ...card, id: Math.random() }));
+      setChoiceOne(null);
+      setChoiceTwo(null);
+      setCards(shuffledCards);
+      setTurns(0);
+    }
+    if (fieldSize === 36) {
+      const shuffledCards = [
+        ...cardImages16,
+        ...cardImages16,
+        ...cardImages20,
+        ...cardImages20,
+        ...cardImages36,
+        ...cardImages36,
+      ]
+        .sort(() => Math.random() - 0.5)
+        .map((card) => ({ ...card, id: Math.random() }));
+      setChoiceOne(null);
+      setChoiceTwo(null);
+      setCards(shuffledCards);
+      setTurns(0);
+    }
   };
 
   const handleСardChoice = (card) => {
@@ -112,9 +152,17 @@ function App() {
     setTimeControl(value);
   };
 
+  const onChangeFieldSize = ({ target: { value } }) => {
+    setFieldSize(value);
+  };
+
   useEffect(() => {
     shuffleCards();
   }, []);
+
+  useEffect(() => {
+    shuffleCards();
+  }, [fieldSize]);
 
   useEffect(() => {
     if (isGameOn && counter === 0) {
@@ -159,6 +207,9 @@ function App() {
     setCardsDisabled(false);
   };
 
+  const gridStyle = fieldSize === 16 ? "card-grid-16" 
+  : fieldSize === 20 ? "card-grid-20" : "card-grid-36"
+
   return (
     <>
       <div className="App">
@@ -166,7 +217,9 @@ function App() {
         <SettingsPanel
           onChangeTimeControl={onChangeTimeControl}
           timeControl={timeControl}
+          fieldSize={fieldSize}
           disableChoice={isGameOn}
+          onChangeFieldSize={onChangeFieldSize}
         />
         <div className="game-topbar">
           <p>Turns: {turns}</p>
@@ -187,7 +240,7 @@ function App() {
             </div>
           )}
         </div>
-        <div className="card-grid">
+        <div className={gridStyle}>
           {cards.map((card) => (
             <SingleCard
               key={card.id}
