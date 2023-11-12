@@ -7,7 +7,7 @@
   display: block;
   border: 2px solid #fff;
   border-radius: 6px;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .card .front {

@@ -6,35 +6,75 @@ import SettingsPanel from "./components/SettingsPanel/SettingsPanel";
 
 const cardImages = [
   {
-    src: "src/img/free-icon-family-3900396.png",
+    src: "src/img/family2.jpg",
     matched: false,
   },
   {
-    src: "src/img/free-icon-family-3961230.png",
+    src: "src/img/family1.jpg",
     matched: false,
   },
   {
-    src: "src/img/free-icon-family-6163184.png",
+    src: "src/img/family3.jpg",
     matched: false,
   },
   {
-    src: "src/img/free-icon-family-6385186.png",
+    src: "src/img/family4.jpg",
     matched: false,
   },
   {
-    src: "src/img/free-icon-parenting-11777542.png",
+    src: "src/img/family5.jpg",
     matched: false,
   },
   {
-    src: "src/img/free-icon-family-life-3452380.png",
+    src: "src/img/family6.jpg",
     matched: false,
   },
   {
-    src: "src/img/free-icon-family-6589348.png",
+    src: "src/img/family7.jpg",
     matched: false,
   },
   {
-    src: "src/img/free-icon-family-11009818.png",
+    src: "src/img/family8.jpg",
+    matched: false,
+  },
+  {
+    src: "src/img/family9.jpg",
+    matched: false,
+  },
+  {
+    src: "src/img/family10.jpg",
+    matched: false,
+  },
+  {
+    src: "src/img/family11.jpg",
+    matched: false,
+  },
+  {
+    src: "src/img/family12.jpg",
+    matched: false,
+  },
+  {
+    src: "src/img/family13.jpg",
+    matched: false,
+  },
+  {
+    src: "src/img/family14.jpg",
+    matched: false,
+  },
+  {
+    src: "src/img/family15.jpg",
+    matched: false,
+  },
+  {
+    src: "src/img/family16.jpg",
+    matched: false,
+  },
+  {
+    src: "src/img/family17.jpg",
+    matched: false,
+  },
+  {
+    src: "src/img/family18.jpg",
     matched: false,
   },
 ];
