@@ -95,6 +95,8 @@ function App() {
   const [turns, setTurns] = useState(0);
 
   const [fieldSize, setFieldSize] = useState(16);
+  const [userName, setUserName] = useState("");
+  const [showWelcome, setShowWelcome] = useState(false);
 
   const [timeControl, setTimeControl] = useState(0);
   const [counter, setCounter] = useState(0);
@@ -156,6 +158,14 @@ function App() {
     setFieldSize(value);
   };
 
+  const onChangeUserName = ({ target: { value } }) => {
+    setUserName(value);
+  };
+
+  const onSubmitName = () => {
+    setShowWelcome(true);
+  };
+
   useEffect(() => {
     shuffleCards();
   }, []);
@@ -207,19 +217,27 @@ function App() {
     setCardsDisabled(false);
   };
 
-  const gridStyle = fieldSize === 16 ? "card-grid-16" 
-  : fieldSize === 20 ? "card-grid-20" : "card-grid-36"
+  const gridStyle =
+    fieldSize === 16
+      ? "card-grid-16"
+      : fieldSize === 20
+      ? "card-grid-20"
+      : "card-grid-36";
 
   return (
     <>
       <div className="App">
-        <h1>Family Match</h1>
+        <h1>Найди Семью Memory Game</h1>
         <SettingsPanel
           onChangeTimeControl={onChangeTimeControl}
           timeControl={timeControl}
           fieldSize={fieldSize}
           disableChoice={isGameOn}
           onChangeFieldSize={onChangeFieldSize}
+          onChangeName={onChangeUserName}
+          userName={userName}
+          onSubmitName={onSubmitName}
+          showWelcome={showWelcome}
         />
         <div className="game-topbar">
           <p>Turns: {turns}</p>
