@@ -4,21 +4,17 @@ import SingleCard from "./components/SingleCard/SingleCard";
 import ModalWindow from "./components/ModalWindow/ModalWindow";
 import SettingsPanel from "./components/SettingsPanel/SettingsPanel";
 
-const cardImages16 = [
-  {
-    src: "src/img/family2.jpg",
-    matched: false,
-  },
+const cardImages = [
   {
     src: "src/img/family1.jpg",
     matched: false,
   },
   {
-    src: "src/img/family3.jpg",
+    src: "src/img/family2.jpg",
     matched: false,
   },
   {
-    src: "src/img/family19.png",
+    src: "src/img/family3.jpg",
     matched: false,
   },
   {
@@ -37,20 +33,6 @@ const cardImages16 = [
     src: "src/img/family8.jpg",
     matched: false,
   },
-];
-
-const cardImages20 = [
-  {
-    src: "src/img/family17.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family18.jpg",
-    matched: false,
-  },
-];
-
-const cardImages36 = [
   {
     src: "src/img/family9.jpg",
     matched: false,
@@ -77,6 +59,18 @@ const cardImages36 = [
   },
   {
     src: "src/img/family15.jpg",
+    matched: false,
+  },
+  {
+    src: "src/img/family17.jpg",
+    matched: false,
+  },
+  {
+    src: "src/img/family18.jpg",
+    matched: false,
+  },
+  {
+    src: "src/img/family19.png",
     matched: false,
   },
   {
@@ -107,40 +101,40 @@ function App() {
   const [isFailModalOpen, setIsFailModalOpen] = useState(false);
 
   const shuffleCards = () => {
+
+    const createUniqueCardsArray = (allCards, endNumber) => {
+      return allCards.sort(() => Math.random() - 0.5).slice(0, endNumber);
+    };
+
+    const createPairedCardsArray = (uniqueCards) => {
+      return [...uniqueCards, ...uniqueCards].map((card) => ({
+        ...card,
+        id: Math.random(),
+      }));
+    };
+
     if (fieldSize === 16) {
-      const shuffledCards = [...cardImages16, ...cardImages16]
-        .sort(() => Math.random() - 0.5)
-        .map((card) => ({ ...card, id: Math.random() }));
+      const cardsForGame = createUniqueCardsArray(cardImages, 8);
+      const shuffledCards = createPairedCardsArray(cardsForGame);
+      
       setChoiceOne(null);
       setChoiceTwo(null);
       setCards(shuffledCards);
       setTurns(0);
     }
     if (fieldSize === 20) {
-      const shuffledCards = [
-        ...cardImages16,
-        ...cardImages16,
-        ...cardImages20,
-        ...cardImages20,
-      ]
-        .sort(() => Math.random() - 0.5)
-        .map((card) => ({ ...card, id: Math.random() }));
+      const cardsForGame = createUniqueCardsArray(cardImages, 10);
+      const shuffledCards = createPairedCardsArray(cardsForGame);
+
       setChoiceOne(null);
       setChoiceTwo(null);
       setCards(shuffledCards);
       setTurns(0);
     }
     if (fieldSize === 36) {
-      const shuffledCards = [
-        ...cardImages16,
-        ...cardImages16,
-        ...cardImages20,
-        ...cardImages20,
-        ...cardImages36,
-        ...cardImages36,
-      ]
-        .sort(() => Math.random() - 0.5)
-        .map((card) => ({ ...card, id: Math.random() }));
+      const cardsForGame = createUniqueCardsArray(cardImages, 18);
+      const shuffledCards = createPairedCardsArray(cardsForGame);
+
       setChoiceOne(null);
       setChoiceTwo(null);
       setCards(shuffledCards);
@@ -168,8 +162,6 @@ function App() {
     setUserName(value);
   };
 
-  
-
   const onSubmitName = () => {
     setShowWelcome(true);
   };
@@ -192,7 +184,7 @@ function App() {
   }, [counter]);
 
   useEffect(() => {
-    if (turns > turnsNumber) setIsFailModalOpen(true)
+    if (turns > turnsNumber) setIsFailModalOpen(true);
   }, [turns]);
 
   useEffect(() => {
@@ -236,7 +228,6 @@ function App() {
       ? "card-grid-20"
       : "card-grid-36";
 
-
   return (
     <>
       <div className="App">
@@ -255,7 +246,10 @@ function App() {
           turnsNumber={turnsNumber}
         />
         <div className="game-topbar">
-          <p>Turns: {turns}{(turnsNumber === 20 || turnsNumber === 40)  && ` из ${turnsNumber}`}</p>
+          <p>
+            Turns: {turns}
+            {(turnsNumber === 20 || turnsNumber === 40) && ` из ${turnsNumber}`}
+          </p>
           <button
             onClick={() => {
               shuffleCards();
