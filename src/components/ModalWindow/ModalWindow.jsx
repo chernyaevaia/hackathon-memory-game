@@ -1,7 +1,7 @@
 import ReactDom from "react-dom";
 import styles from "./ModalWindow.module.css";
 
-export default function ModalWindow({ text, open, onClose }) {
+export default function ModalWindow({ text, open, onClose, turns, timeSpent }) {
   if (!open) return null;
 
   return ReactDom.createPortal(
@@ -13,6 +13,8 @@ export default function ModalWindow({ text, open, onClose }) {
         }}
       >
         <p>{text}</p>
+        <div>Количество ходов: {turns}</div>
+        <div>Время игры: {timeSpent}</div>
         <button onClick={onClose}>Закрыть</button>
       </div>
     </div>,

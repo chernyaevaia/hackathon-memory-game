@@ -94,14 +94,14 @@ function App() {
 
   const [timeControl, setTimeControl] = useState(0);
   const [counter, setCounter] = useState(0);
+  const [timeSpent, setTimeSpent] = useState(0);
 
-  const [turnsNumber, setTurnsNumber] = useState(10000000000000000);
+  const [maxTurnsNumber, setMaxTurnsNumber] = useState(10000000000000000);
 
   const [isWinModalOpen, setIsWinModalOpen] = useState(false);
   const [isFailModalOpen, setIsFailModalOpen] = useState(false);
 
   const shuffleCards = () => {
-
     const createUniqueCardsArray = (allCards, endNumber) => {
       return allCards.sort(() => Math.random() - 0.5).slice(0, endNumber);
     };
@@ -113,32 +113,27 @@ function App() {
       }));
     };
 
-    if (fieldSize === 16) {
-      const cardsForGame = createUniqueCardsArray(cardImages, 8);
-      const shuffledCards = createPairedCardsArray(cardsForGame);
-      
+    const reset = (shuffledCards) => {
       setChoiceOne(null);
       setChoiceTwo(null);
       setCards(shuffledCards);
       setTurns(0);
+    };
+
+    if (fieldSize === 16) {
+      const cardsForGame = createUniqueCardsArray(cardImages, 8);
+      const shuffledCards = createPairedCardsArray(cardsForGame);
+      reset(shuffledCards);
     }
     if (fieldSize === 20) {
       const cardsForGame = createUniqueCardsArray(cardImages, 10);
       const shuffledCards = createPairedCardsArray(cardsForGame);
-
-      setChoiceOne(null);
-      setChoiceTwo(null);
-      setCards(shuffledCards);
-      setTurns(0);
+      reset(shuffledCards);
     }
     if (fieldSize === 36) {
       const cardsForGame = createUniqueCardsArray(cardImages, 18);
       const shuffledCards = createPairedCardsArray(cardsForGame);
-
-      setChoiceOne(null);
-      setChoiceTwo(null);
-      setCards(shuffledCards);
-      setTurns(0);
+      reset(shuffledCards);
     }
   };
 
@@ -155,7 +150,7 @@ function App() {
   };
 
   const onChangeTurnsNumber = ({ target: { value } }) => {
-    setTurnsNumber(value);
+    setMaxTurnsNumber(value);
   };
 
   const onChangeUserName = ({ target: { value } }) => {
@@ -177,6 +172,7 @@ function App() {
   useEffect(() => {
     if (isGameOn && counter === 0) {
       setIsFailModalOpen(true);
+      setIsGameOn(false);
     }
     const timer =
       counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
@@ -184,7 +180,16 @@ function App() {
   }, [counter]);
 
   useEffect(() => {
-    if (turns > turnsNumber) setIsFailModalOpen(true);
+    const timer =
+      isGameOn && setInterval(() => setTimeSpent(timeSpent + 1), 1000);
+    return () => clearInterval(timer);
+  }, [timeSpent, isGameOn]);
+
+  useEffect(() => {
+    if (turns > maxTurnsNumber) {
+      setIsFailModalOpen(true);
+      setIsGameOn(false);
+    }
   }, [turns]);
 
   useEffect(() => {
@@ -228,6 +233,8 @@ function App() {
       ? "card-grid-20"
       : "card-grid-36";
 
+  const gameTime = Math.floor(timeSpent / 60) + ":" + (timeSpent % 60);
+
   return (
     <>
       <div className="App">
@@ -243,18 +250,19 @@ function App() {
           onSubmitName={onSubmitName}
           showWelcome={showWelcome}
           onChangeTurnsNumber={onChangeTurnsNumber}
-          turnsNumber={turnsNumber}
+          turnsNumber={maxTurnsNumber}
         />
         <div className="game-topbar">
           <p>
             Turns: {turns}
-            {(turnsNumber === 20 || turnsNumber === 40) && ` из ${turnsNumber}`}
+            {(maxTurnsNumber === 20 || maxTurnsNumber === 40) && ` из ${maxTurnsNumber}`}
           </p>
           <button
             onClick={() => {
               shuffleCards();
               setIsGameOn(true);
               setCounter(timeControl * 60);
+              setTimeSpent(0);
               setCardsDisabled(false);
             }}
           >
@@ -285,6 +293,8 @@ function App() {
 
       <ModalWindow
         text="Поздравляем! Вы выиграли!"
+        turns={turns}
+        timeSpent={gameTime}
         open={isWinModalOpen}
         onClose={() => {
           setTurns(0);
@@ -295,7 +305,13 @@ function App() {
       />
 
       <ModalWindow
-        text="Игра закончилась - удачи в следующий раз!"
+        text={
+          turns > maxTurnsNumber
+            ? "Количество ходов закончилось - удачи в следующий раз!"
+            : "Время истекло - удачи в следующий раз!"
+        }
+        turns={turns}
+        timeSpent={gameTime}
         open={isFailModalOpen}
         onClose={() => {
           setTurns(0);
