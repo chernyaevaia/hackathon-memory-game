@@ -107,7 +107,7 @@ function App() {
     };
 
     const createPairedCardsArray = (uniqueCards) => {
-      return [...uniqueCards, ...uniqueCards].map((card) => ({
+      return [...uniqueCards, ...uniqueCards].sort(() => Math.random() - 0.5).map((card) => ({
         ...card,
         id: Math.random(),
       }));
@@ -209,6 +209,7 @@ function App() {
           ).length;
           if (hasUnmatched === 0) {
             setIsWinModalOpen(true);
+            setIsGameOn(false);
           }
           return matchedCards;
         });
@@ -255,7 +256,8 @@ function App() {
         <div className="game-topbar">
           <p>
             Turns: {turns}
-            {(maxTurnsNumber === 20 || maxTurnsNumber === 40) && ` из ${maxTurnsNumber}`}
+            {(maxTurnsNumber === 20 || maxTurnsNumber === 40) &&
+              ` из ${maxTurnsNumber}`}
           </p>
           <button
             onClick={() => {
@@ -300,7 +302,6 @@ function App() {
           setTurns(0);
           setIsWinModalOpen(false);
           setCardsDisabled(true);
-          setIsGameOn(false);
         }}
       />
 
@@ -317,7 +318,6 @@ function App() {
           setTurns(0);
           setIsFailModalOpen(false);
           setCardsDisabled(true);
-          setIsGameOn(false);
         }}
       />
     </>
