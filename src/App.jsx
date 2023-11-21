@@ -84,6 +84,7 @@ function App() {
 
   const [cards, setCards] = useState([]);
   const [cardsDisabled, setCardsDisabled] = useState(true);
+  const [startAnimation, setStartAnimation] = useState(false);
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
   const [turns, setTurns] = useState(0);
@@ -266,6 +267,7 @@ function App() {
               setCounter(timeControl * 60);
               setTimeSpent(0);
               setCardsDisabled(false);
+              setStartAnimation(true)
             }}
           >
             {isGameOn ? "Начать заново" : "Начать"}
@@ -281,6 +283,7 @@ function App() {
           {cards.map((card) => (
             <SingleCard
               key={card.id}
+              startAnimation={startAnimation}
               card={card}
               handleChoice={handleСardChoice}
               flipped={
