@@ -62,6 +62,7 @@ export default function SettingsPanel({
         onChange={onChangeFieldSize}
         inputName="fieldSize"
         selectedOption={fieldSize}
+        disableChoice={disableChoice}
       />
       <SettingsPicker
         text="Установить ограничение времени:"
@@ -69,6 +70,7 @@ export default function SettingsPanel({
         onChange={onChangeTimeControl}
         inputName="timer"
         selectedOption={timeControl}
+        disableChoice={disableChoice}
       />
       <SettingsPicker
         text="Установить ограничение ходов:"
@@ -76,6 +78,7 @@ export default function SettingsPanel({
         onChange={onChangeTurnsNumber}
         inputName="turns"
         selectedOption={turnsNumber}
+        disableChoice={disableChoice}
       />
     </div>
   );
