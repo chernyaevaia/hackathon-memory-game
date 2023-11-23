@@ -81,9 +81,9 @@ const cardImages = [
 
 function App() {
   const [isGameOn, setIsGameOn] = useState(false);
+  const [cardsDisabled, setCardsDisabled] = useState(true);
 
   const [cards, setCards] = useState([]);
-  const [cardsDisabled, setCardsDisabled] = useState(true);
   const [startAnimation, setStartAnimation] = useState(false);
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);

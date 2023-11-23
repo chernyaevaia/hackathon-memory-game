@@ -10,7 +10,7 @@ export function SettingsPicker({
 }) {
   return (
     <div>
-      <p>{text}</p>
+      <p className="settingsText">{text}</p>
       <div className="form_radio_group">
         {options.map((option) => {
           return (
