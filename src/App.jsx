@@ -236,6 +236,7 @@ function App() {
     <>
       <div className="App">
         <h1 className="heading">Найди Семью Memory Game</h1>
+        <div className="settings-container">
         <SettingsPanel
           onChangeTimeControl={onChangeTimeControl}
           timeControl={timeControl}
@@ -249,12 +250,8 @@ function App() {
           onChangeTurnsNumber={onChangeTurnsNumber}
           turnsNumber={maxTurnsNumber}
         />
+        </div>
         <div className="game-topbar">
-          <p>
-            Ходы: {turns}
-            {(maxTurnsNumber === "20" || maxTurnsNumber === "40") &&
-              ` из ${maxTurnsNumber}`}
-          </p>
           <button
             className="startBtn"
             onClick={() => {
@@ -268,9 +265,14 @@ function App() {
           >
             {isGameOn ? "Начать заново" : "Начать"}
           </button>
+          <div className="turnsCounter">
+            Ходы: {turns}
+            {(maxTurnsNumber === "20" || maxTurnsNumber === "40") &&
+              ` из ${maxTurnsNumber}`}
+          </div>
 
           {counter !== 0 && isGameOn && (
-            <div>
+            <div className="timeCounter">
               Оставшееся время: {Math.floor(counter / 60)}:{counter % 60}
             </div>
           )}

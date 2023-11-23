@@ -1,17 +1,17 @@
 .card-grid-16 {
-    margin-top: 40px;
+    margin-top: 20px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 20px;
   }
   .card-grid-20 {
-    margin-top: 40px;
+    margin-top: 20px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-gap: 20px;
   }
   .card-grid-36 {
-    margin-top: 40px;
+    margin-top: 20px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-gap: 20px;

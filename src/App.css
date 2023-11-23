@@ -1,7 +1,13 @@
 .App {
-  max-width: 940px;
+  max-width: 980px;
   margin: 40px auto;
 }
+
+.settings-container {
+display: flex;
+justify-content: center;
+}
+
 .startBtn {
   background: none;
   border: 2px solid #fff;
@@ -10,7 +16,7 @@
   color: #fff;
   font-weight: bold;
   cursor: pointer;
-  font-size: 1em;
+  font-size: 20px;
 }
 
 .startBtn:hover {
@@ -21,8 +27,16 @@
 .game-topbar {
   display: flex;
   align-items: center;
-  margin-top: 10px;
-  column-gap: 50px;
+}
+
+.turnsCounter {
+  position: absolute;
+  margin-left: 260px;
+}
+
+.timeCounter {
+  position: absolute;
+  margin-left: 460px;
 }
 
 .heading {
