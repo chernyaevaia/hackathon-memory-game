@@ -1,6 +1,6 @@
 import "./SingleCard.css";
 
-export default function SingleCard({ card, handleChoice, flipped, disabled, startAnimation }) {
+export function SingleCard({ card, handleChoice, flipped, disabled, startAnimation }) {
   const handleClick = () => {
     if (!disabled) {
       handleChoice(card);

@@ -1,0 +1,81 @@
+.input-container {
+  display: flex;
+}
+
+input[type="text"],
+.nameBtn {
+  padding: 10px;
+  border: none;
+}
+
+input[type="text"] {
+  border-radius: 4px 0 0 4px;
+
+}
+
+.nameBtn {
+  color: #fff;
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  -webkit-transition: background-color 0.25s ease-in-out;
+  -moz-transition: background-color 0.25s ease-in-out;
+  -o-transition: background-color 0.25s ease-in-out;
+  transition: background-color 0.25s ease-in-out;
+}
+
+.nameBtn:hover {
+  background: #8f5295;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form_radio_group {
+  display: inline-block;
+}
+
+.form_radio_group-item {
+  display: inline-block;
+}
+
+.form_radio_group input[type="radio"] {
+  display: none;
+}
+
+.form_radio_group label {
+  display: inline-block;
+  cursor: pointer;
+  padding: 0px 15px;
+  border: 1px solid #999;
+  padding: 6px 18px;
+}
+
+.firstBtn {
+  border-radius: 6px 0px 0px 6px;
+}
+
+.lastBtn {
+  border-radius: 0 6px 6px 0;
+}
+
+/* Checked */
+.form_radio_group input[type="radio"]:checked + label {
+  background: #8f5295;
+}
+
+/* Hover */
+.form_radio_group label:hover {
+  color: #dedde3;
+}
+
+/* Disabled */
+.form_radio_group input[type="radio"]:disabled + label {
+  background: #7a3d80;
+  color: #a9a9a9;
+}

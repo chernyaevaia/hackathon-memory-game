@@ -32,9 +32,9 @@
 .call-gradient {
   background: linear-gradient(
     135deg,
-    rgba(157, 213, 58, 0) 0%,
+    rgba(200, 58, 213, 0) 0%,
     rgba(161, 213, 79, 0) 46%,
-    rgba(255, 255, 255, 1) 50%,
+    rgb(255, 169, 249),
     rgba(161, 213, 79, 0) 54%,
     rgba(124, 188, 10, 0) 100%
   );

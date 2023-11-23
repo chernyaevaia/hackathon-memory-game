@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import SingleCard from "./components/SingleCard/SingleCard";
 import ModalWindow from "./components/ModalWindow/ModalWindow";
 import SettingsPanel from "./components/SettingsPanel/SettingsPanel";
+import { GameField } from "./components/GameField/GameField";
 
 const cardImages = [
   {
@@ -89,15 +89,15 @@ function App() {
   const [choiceTwo, setChoiceTwo] = useState(null);
   const [turns, setTurns] = useState(0);
 
-  const [fieldSize, setFieldSize] = useState(16);
+  const [fieldSize, setFieldSize] = useState("16");
   const [userName, setUserName] = useState("");
   const [showWelcome, setShowWelcome] = useState(false);
 
-  const [timeControl, setTimeControl] = useState(0);
+  const [timeControl, setTimeControl] = useState("0");
   const [counter, setCounter] = useState(0);
   const [timeSpent, setTimeSpent] = useState(0);
 
-  const [maxTurnsNumber, setMaxTurnsNumber] = useState(10000000000000000);
+  const [maxTurnsNumber, setMaxTurnsNumber] = useState("10000000000000000");
 
   const [isWinModalOpen, setIsWinModalOpen] = useState(false);
   const [isFailModalOpen, setIsFailModalOpen] = useState(false);
@@ -108,10 +108,12 @@ function App() {
     };
 
     const createPairedCardsArray = (uniqueCards) => {
-      return [...uniqueCards, ...uniqueCards].sort(() => Math.random() - 0.5).map((card) => ({
-        ...card,
-        id: Math.random(),
-      }));
+      return [...uniqueCards, ...uniqueCards]
+        .sort(() => Math.random() - 0.5)
+        .map((card) => ({
+          ...card,
+          id: Math.random(),
+        }));
     };
 
     const reset = (shuffledCards) => {
@@ -121,17 +123,17 @@ function App() {
       setTurns(0);
     };
 
-    if (fieldSize === 16) {
+    if (fieldSize == "16") {
       const cardsForGame = createUniqueCardsArray(cardImages, 8);
       const shuffledCards = createPairedCardsArray(cardsForGame);
       reset(shuffledCards);
     }
-    if (fieldSize === 20) {
+    if (fieldSize === "20") {
       const cardsForGame = createUniqueCardsArray(cardImages, 10);
       const shuffledCards = createPairedCardsArray(cardsForGame);
       reset(shuffledCards);
     }
-    if (fieldSize === 36) {
+    if (fieldSize === "36") {
       const cardsForGame = createUniqueCardsArray(cardImages, 18);
       const shuffledCards = createPairedCardsArray(cardsForGame);
       reset(shuffledCards);
@@ -228,19 +230,12 @@ function App() {
     setCardsDisabled(false);
   };
 
-  const gridStyle =
-    fieldSize === 16
-      ? "card-grid-16"
-      : fieldSize === 20
-      ? "card-grid-20"
-      : "card-grid-36";
-
   const gameTime = Math.floor(timeSpent / 60) + ":" + (timeSpent % 60);
 
   return (
     <>
       <div className="App">
-        <h1>Найди Семью Memory Game</h1>
+        <h1 className="heading">Найди Семью Memory Game</h1>
         <SettingsPanel
           onChangeTimeControl={onChangeTimeControl}
           timeControl={timeControl}
@@ -256,18 +251,19 @@ function App() {
         />
         <div className="game-topbar">
           <p>
-            Turns: {turns}
-            {(maxTurnsNumber === 20 || maxTurnsNumber === 40) &&
+            Ходы: {turns}
+            {(maxTurnsNumber === "20" || maxTurnsNumber === "40") &&
               ` из ${maxTurnsNumber}`}
           </p>
           <button
+            className="startBtn"
             onClick={() => {
               shuffleCards();
               setIsGameOn(true);
-              setCounter(timeControl * 60);
+              setCounter(+timeControl * 60);
               setTimeSpent(0);
               setCardsDisabled(false);
-              setStartAnimation(true)
+              setStartAnimation(true);
             }}
           >
             {isGameOn ? "Начать заново" : "Начать"}
@@ -279,25 +275,20 @@ function App() {
             </div>
           )}
         </div>
-        <div className={gridStyle}>
-          {cards.map((card) => (
-            <SingleCard
-              key={card.id}
-              startAnimation={startAnimation}
-              card={card}
-              handleChoice={handleСardChoice}
-              flipped={
-                (card === choiceOne || card === choiceTwo || card.matched) &&
-                isGameOn
-              }
-              disabled={cardsDisabled}
-            />
-          ))}
-        </div>
+        <GameField
+          cards={cards}
+          choiceOne={choiceOne}
+          choiceTwo={choiceTwo}
+          handleСardChoice={handleСardChoice}
+          startAnimation={startAnimation}
+          isGameOn={isGameOn}
+          cardsDisabled={cardsDisabled}
+          fieldSize={fieldSize}
+        />
       </div>
 
       <ModalWindow
-        text="Поздравляем! Вы выиграли!"
+        text="Поздравляем, Вы выиграли!"
         turns={turns}
         timeSpent={gameTime}
         open={isWinModalOpen}
