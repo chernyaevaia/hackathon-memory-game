@@ -1,4 +1,23 @@
+import { SettingsPicker } from "../SettingsPicker/SettingsPicker";
 import "./SettingsPanel.css";
+
+const timeControlOptions = [
+  { label: "без таймера", value: "0", id: "timer1" },
+  { label: "3 минуты", value: "3", id: "timer2" },
+  { label: "5 минут", value: "5", id: "timer3" },
+];
+
+const turnsControlOptions = [
+  { label: "без ограничений", value: "10000000000000000", id: "turns1" },
+  { label: "20 ходов", value: "20", id: "turns2" },
+  { label: "40 ходов", value: "40", id: "turns3" },
+];
+
+const fieldSizeOptions = [
+  { label: "4x4", value: "16", id: "field1" },
+  { label: "4x5", value: "20", id: "field2" },
+  { label: "6x6", value: "36", id: "field3" },
+];
 
 export default function SettingsPanel({
   onChangeTimeControl,
@@ -21,146 +40,43 @@ export default function SettingsPanel({
         <div>
           <p>Введите имя:</p>
           <div className="input-container">
-            <input onChange={onChangeName} type="text" placeholder="Имя" disabled={disableChoice}/>
-            <button onClick={onSubmitName} className="nameBtn" disabled={disableChoice}>Отправить</button>
+            <input
+              onChange={onChangeName}
+              type="text"
+              placeholder="Имя"
+              disabled={disableChoice}
+            />
+            <button
+              onClick={onSubmitName}
+              className="nameBtn"
+              disabled={disableChoice}
+            >
+              Отправить
+            </button>
           </div>
         </div>
       )}
-      <div>
-        <p>Установить размер поля:</p>
-        <div className="form_radio_group">
-          <div className="form_radio_group-item">
-            <input
-              onChange={onChangeFieldSize}
-              id="radio-1.1"
-              type="radio"
-              name="fieldSize"
-              value="16"
-              checked={fieldSize === "16"}
-              disabled={disableChoice}
-            />
-            <label className="firstBtn" htmlFor="radio-1.1">
-              4x4
-            </label>
-          </div>
-          <div className="form_radio_group-item">
-            <input
-              onChange={onChangeFieldSize}
-              id="radio-1.2"
-              type="radio"
-              name="fieldSize"
-              value="20"
-              checked={fieldSize === "20"}
-              disabled={disableChoice}
-            />
-            <label htmlFor="radio-1.2">4x5</label>
-          </div>
-          <div className="form_radio_group-item">
-            <input
-              onChange={onChangeFieldSize}
-              id="radio-1.3"
-              type="radio"
-              name="fieldSize"
-              value="36"
-              checked={fieldSize === "36"}
-              disabled={disableChoice}
-            />
-            <label className="lastBtn" htmlFor="radio-1.3">
-              6x6
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <p>Установить таймер игры:</p>
-        <div className="form_radio_group">
-          <div className="form_radio_group-item">
-            <input
-              onChange={onChangeTimeControl}
-              id="radio-2.1"
-              type="radio"
-              name="timer"
-              value={"0"}
-              checked={timeControl === "0"}
-              disabled={disableChoice}
-            />
-            <label className="firstBtn" htmlFor="radio-2.1">
-              без ограничений
-            </label>
-          </div>
-          <div className="form_radio_group-item">
-            <input
-              onChange={onChangeTimeControl}
-              id="radio-2.2"
-              type="radio"
-              name="timer"
-              value="3"
-              checked={timeControl === "3"}
-              disabled={disableChoice}
-            />
-            <label htmlFor="radio-2.2">3 минуты</label>
-          </div>
-          <div className="form_radio_group-item">
-            <input
-              onChange={onChangeTimeControl}
-              id="radio-2.3"
-              type="radio"
-              name="timer"
-              value={"5"}
-              checked={timeControl === "5"}
-              disabled={disableChoice}
-            />
-            <label className="lastBtn" htmlFor="radio-2.3">
-              5 минут
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <p>Установить ограничение ходов:</p>
-      <div className="form_radio_group">
-        <div className="form_radio_group-item">
-          <input
-            onChange={onChangeTurnsNumber}
-            id="radio-3.1"
-            type="radio"
-            name="turns"
-            value="10000000000000000"
-            checked={turnsNumber === "10000000000000000"}
-            disabled={disableChoice}
-          />
-          <label className="firstBtn" htmlFor="radio-3.1">
-            без ограничений
-          </label>
-        </div>
-        <div className="form_radio_group-item">
-          <input
-            onChange={onChangeTurnsNumber}
-            id="radio-3.2"
-            type="radio"
-            name="turns"
-            value="20"
-            checked={turnsNumber === "20"}
-            disabled={disableChoice}
-          />
-          <label htmlFor="radio-3.2">20 ходов</label>
-        </div>
-        <div className="form_radio_group-item">
-          <input
-            onChange={onChangeTurnsNumber}
-            id="radio-3.3"
-            type="radio"
-            name="turns"
-            value="40"
-            checked={turnsNumber === "40"}
-            disabled={disableChoice}
-          />
-          <label className="lastBtn" htmlFor="radio-3.3">
-            40 ходов
-          </label>
-        </div>
-      </div>
+      <SettingsPicker
+        text="Установить размер поля:"
+        options={fieldSizeOptions}
+        onChange={onChangeFieldSize}
+        inputName="fieldSize"
+        selectedOption={fieldSize}
+      />
+      <SettingsPicker
+        text="Установить ограничение времени:"
+        options={timeControlOptions}
+        onChange={onChangeTimeControl}
+        inputName="timer"
+        selectedOption={timeControl}
+      />
+      <SettingsPicker
+        text="Установить ограничение ходов:"
+        options={turnsControlOptions}
+        onChange={onChangeTurnsNumber}
+        inputName="turns"
+        selectedOption={turnsNumber}
+      />
     </div>
   );
 }

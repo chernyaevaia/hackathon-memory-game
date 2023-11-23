@@ -1,0 +1,45 @@
+
+.form_radio_group {
+    display: inline-block;
+  }
+  
+  .form_radio_group-item {
+    display: inline-block;
+  }
+  
+  .form_radio_group input[type="radio"] {
+    display: none;
+  }
+  
+  .form_radio_group label {
+    display: inline-block;
+    cursor: pointer;
+    padding: 0px 15px;
+    border: 1px solid #999;
+    padding: 6px 18px;
+  }
+  
+  .firstBtn {
+    border-radius: 6px 0px 0px 6px;
+  }
+  
+  .lastBtn {
+    border-radius: 0 6px 6px 0;
+  }
+  
+  /* Checked */
+  .form_radio_group input[type="radio"]:checked + label {
+    background: #8f5295;
+  }
+  
+  /* Hover */
+  .form_radio_group label:hover {
+    color: #dedde3;
+  }
+  
+  /* Disabled */
+  .form_radio_group input[type="radio"]:disabled + label {
+    background: #7a3d80;
+    color: #a9a9a9;
+  }
+  

@@ -123,7 +123,7 @@ function App() {
       setTurns(0);
     };
 
-    if (fieldSize == "16") {
+    if (fieldSize === "16") {
       const cardsForGame = createUniqueCardsArray(cardImages, 8);
       const shuffledCards = createPairedCardsArray(cardsForGame);
       reset(shuffledCards);
