@@ -9,9 +9,6 @@ body {
   color: #fff;
 }
 
-/* #7a3d80
-#8f5295
-#56085c
-#cea1b6
-#efc6d8
-#dedde3 */
+* {
+  box-sizing: border-box;
+}

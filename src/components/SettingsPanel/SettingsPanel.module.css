@@ -1,20 +1,28 @@
-.input-container {
+.inputContainer {
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-input[type="text"] {
+.nameInput {
   width: 160px;
+  height: 40px;
+  font-size: 16px;
   border-radius: 4px 0 0 4px;
-  padding: 6px 18px;
+  padding: 10px 18px;
   border: none;
 }
+.nameInput:focus{
+  outline: none;
+}
 
-.nameBtn {
+.sendBtn {
+  height: 40px;
   color: #fff;
   font-size: 16px;
   padding: 10px;
+  border: 1px solid white;
   background: none;
-  border: 2px solid white;
   border-radius: 0 4px 4px 0;
   cursor: pointer;
   -webkit-transition: background-color 0.25s ease-in-out;
@@ -23,8 +31,14 @@ input[type="text"] {
   transition: background-color 0.25s ease-in-out;
 }
 
-.nameBtn:hover {
+.sendBtn:hover {
   background: #8f5295;
+}
+
+.sendBtn:disabled {
+  background: #7a3d80;
+  color: #a9a9a9;
+  border: none;
 }
 
 .wrapper {

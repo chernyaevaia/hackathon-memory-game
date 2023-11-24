@@ -3,81 +3,8 @@ import "./App.css";
 import ModalWindow from "./components/ModalWindow/ModalWindow";
 import SettingsPanel from "./components/SettingsPanel/SettingsPanel";
 import { GameField } from "./components/GameField/GameField";
+import { CardImages } from "./utils";
 
-const cardImages = [
-  {
-    src: "src/img/family1.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family2.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family3.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family5.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family6.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family7.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family8.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family9.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family10.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family11.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family12.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family13.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family14.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family15.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family17.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family18.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family19.png",
-    matched: false,
-  },
-  {
-    src: "src/img/family20.png",
-    matched: false,
-  },
-];
 
 function App() {
   const [isGameOn, setIsGameOn] = useState(false);
@@ -124,17 +51,17 @@ function App() {
     };
 
     if (fieldSize === "16") {
-      const cardsForGame = createUniqueCardsArray(cardImages, 8);
+      const cardsForGame = createUniqueCardsArray(CardImages, 8);
       const shuffledCards = createPairedCardsArray(cardsForGame);
       reset(shuffledCards);
     }
     if (fieldSize === "20") {
-      const cardsForGame = createUniqueCardsArray(cardImages, 10);
+      const cardsForGame = createUniqueCardsArray(CardImages, 10);
       const shuffledCards = createPairedCardsArray(cardsForGame);
       reset(shuffledCards);
     }
     if (fieldSize === "36") {
-      const cardsForGame = createUniqueCardsArray(cardImages, 18);
+      const cardsForGame = createUniqueCardsArray(CardImages, 18);
       const shuffledCards = createPairedCardsArray(cardsForGame);
       reset(shuffledCards);
     }
@@ -230,6 +157,15 @@ function App() {
     setCardsDisabled(false);
   };
 
+  const onGameStart = () => {
+    shuffleCards();
+    setIsGameOn(true);
+    setCounter(+timeControl * 60);
+    setTimeSpent(0);
+    setCardsDisabled(false);
+    setStartAnimation(true);
+  }
+
   const gameTime = Math.floor(timeSpent / 60) + ":" + (timeSpent % 60);
 
   return (
@@ -251,36 +187,14 @@ function App() {
           turnsNumber={maxTurnsNumber}
         />
         </div>
-        <div className="game-topbar">
-          <button
-            className="startBtn"
-            onClick={() => {
-              shuffleCards();
-              setIsGameOn(true);
-              setCounter(+timeControl * 60);
-              setTimeSpent(0);
-              setCardsDisabled(false);
-              setStartAnimation(true);
-            }}
-          >
-            {isGameOn ? "Начать заново" : "Начать"}
-          </button>
-          <div className="turnsCounter">
-            Ходы: {turns}
-            {(maxTurnsNumber === "20" || maxTurnsNumber === "40") &&
-              ` из ${maxTurnsNumber}`}
-          </div>
-
-          {counter !== 0 && isGameOn && (
-            <div className="timeCounter">
-              Оставшееся время: {Math.floor(counter / 60)}:{counter % 60}
-            </div>
-          )}
-        </div>
         <GameField
           cards={cards}
           choiceOne={choiceOne}
           choiceTwo={choiceTwo}
+          turns={turns}
+          maxTurnsNumber={maxTurnsNumber}
+          counter={counter}
+          onGameStart={onGameStart}
           handleСardChoice={handleСardChoice}
           startAnimation={startAnimation}
           isGameOn={isGameOn}

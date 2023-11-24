@@ -1,23 +1,7 @@
 import { SettingsPicker } from "../SettingsPicker/SettingsPicker";
-import "./SettingsPanel.css";
+import styles from "./SettingsPanel.module.css";
+import { FieldSizeOptions, TimeControlOptions, TurnsControlOptions } from "../../utils";
 
-const timeControlOptions = [
-  { label: "без таймера", value: "0", id: "timer1" },
-  { label: "3 минуты", value: "3", id: "timer2" },
-  { label: "5 минут", value: "5", id: "timer3" },
-];
-
-const turnsControlOptions = [
-  { label: "без ограничений", value: "10000000000000000", id: "turns1" },
-  { label: "20 ходов", value: "20", id: "turns2" },
-  { label: "40 ходов", value: "40", id: "turns3" },
-];
-
-const fieldSizeOptions = [
-  { label: "4x4", value: "16", id: "field1" },
-  { label: "4x5", value: "20", id: "field2" },
-  { label: "6x6", value: "36", id: "field3" },
-];
 
 export default function SettingsPanel({
   onChangeTimeControl,
@@ -33,14 +17,15 @@ export default function SettingsPanel({
   turnsNumber,
 }) {
   return (
-    <div className="wrapper">
+    <div className={styles.wrapper}>
       {showWelcome ? (
         <p>Добро пожаловать, {userName}!</p>
       ) : (
         <div>
           <p>Введите имя:</p>
-          <div className="input-container">
+          <div className={styles.inputWraper}>
             <input
+            className={styles.nameInput}
               onChange={onChangeName}
               type="text"
               placeholder="Имя"
@@ -48,8 +33,8 @@ export default function SettingsPanel({
             />
             <button
               onClick={onSubmitName}
-              className="nameBtn"
-              disabled={disableChoice}
+              className={styles.sendBtn}
+              disabled={disableChoice || !userName.trim()}
             >
               Отправить
             </button>
@@ -58,7 +43,7 @@ export default function SettingsPanel({
       )}
       <SettingsPicker
         text="Установить размер поля:"
-        options={fieldSizeOptions}
+        options={FieldSizeOptions}
         onChange={onChangeFieldSize}
         inputName="fieldSize"
         selectedOption={fieldSize}
@@ -66,7 +51,7 @@ export default function SettingsPanel({
       />
       <SettingsPicker
         text="Установить ограничение времени:"
-        options={timeControlOptions}
+        options={TimeControlOptions}
         onChange={onChangeTimeControl}
         inputName="timer"
         selectedOption={timeControl}
@@ -74,7 +59,7 @@ export default function SettingsPanel({
       />
       <SettingsPicker
         text="Установить ограничение ходов:"
-        options={turnsControlOptions}
+        options={TurnsControlOptions}
         onChange={onChangeTurnsNumber}
         inputName="turns"
         selectedOption={turnsNumber}

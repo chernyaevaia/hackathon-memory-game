@@ -1,5 +1,6 @@
 import { SingleCard } from "../SingleCard/SingleCard";
-import "./GameField.css"
+import styles from "./GameField.module.css";
+import cx from "classnames";
 
 export function GameField({
   cards,
@@ -10,29 +11,62 @@ export function GameField({
   isGameOn,
   cardsDisabled,
   fieldSize,
+  turns,
+  maxTurnsNumber,
+  counter,
+  onGameStart,
 }) {
-  const gridStyle =
-    fieldSize == 16
-      ? "card-grid-16"
-      : fieldSize === "20"
-      ? "card-grid-20"
-      : "card-grid-36";
-
   return (
-    <div className={gridStyle}>
-      {cards.map((card) => (
-        <SingleCard
-          key={card.id}
-          startAnimation={startAnimation}
-          card={card}
-          handleChoice={handleСardChoice}
-          flipped={
-            (card === choiceOne || card === choiceTwo || card.matched) &&
-            isGameOn
-          }
-          disabled={cardsDisabled}
-        />
-      ))}
+    <div className={styles.fieldContainer}>
+      <div
+        className={cx(
+          styles.gameTopbar,
+          fieldSize === "16"
+            ? styles.width16
+            : fieldSize === "20"
+            ? styles.width20
+            : styles.width36
+        )}
+      >
+        <button className={styles.startBtn} onClick={onGameStart}>
+          {isGameOn ? "Начать заново" : "Начать"}
+        </button>
+        <div className={styles.turnsCounter}>
+          Ходы: {turns}
+          {(maxTurnsNumber === "20" || maxTurnsNumber === "40") &&
+            ` из ${maxTurnsNumber}`}
+        </div>
+        {counter !== 0 && isGameOn && (
+          <div className={styles.timeCounter}>
+            Оставшееся время: {Math.floor(counter / 60)}:{counter % 60}
+          </div>
+        )}
+      </div>
+
+      <div
+        className={cx(
+          styles.cardsField,
+          fieldSize === "16"
+            ? styles.grid16
+            : fieldSize === "20"
+            ? styles.grid20
+            : styles.grid36
+        )}
+      >
+        {cards.map((card) => (
+          <SingleCard
+            key={card.id}
+            startAnimation={startAnimation}
+            card={card}
+            handleChoice={handleСardChoice}
+            flipped={
+              (card === choiceOne || card === choiceTwo || card.matched) &&
+              isGameOn
+            }
+            disabled={cardsDisabled}
+          />
+        ))}
+      </div>
     </div>
   );
 }

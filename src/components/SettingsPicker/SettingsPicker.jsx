@@ -1,4 +1,4 @@
-import "./SettingsPicker.css";
+import styles from "./SettingsPicker.module.css";
 
 export function SettingsPicker({
   options,
@@ -9,13 +9,14 @@ export function SettingsPicker({
   selectedOption,
 }) {
   return (
-    <div>
-      <p className="settingsText">{text}</p>
-      <div className="form_radio_group">
+    <>
+      <p className={styles.settingsText}>{text}</p>
+      <div className={styles.radioGroup}>
         {options.map((option) => {
           return (
-            <div key={option.id} className="form_radio_group-item">
+            <div key={option.id} className={styles.radioGroupItem}>
               <input
+                className={styles.radioInput}
                 onChange={onChange}
                 id={option.id}
                 type="radio"
@@ -24,11 +25,13 @@ export function SettingsPicker({
                 disabled={disableChoice}
                 checked={selectedOption === option.value}
               />
-              <label htmlFor={option.id}>{option.label}</label>
+              <label className={styles.radioLabel} htmlFor={option.id}>
+                {option.label}
+              </label>
             </div>
           );
         })}
       </div>
-    </div>
+    </>
   );
 }
