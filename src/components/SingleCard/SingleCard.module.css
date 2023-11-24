@@ -29,7 +29,7 @@
   transition-delay: 0s;
 }
 
-.call-gradient {
+.callGradient {
   background: linear-gradient(
     135deg,
     rgba(200, 58, 213, 0) 0%,
