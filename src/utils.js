@@ -1,74 +1,93 @@
+import family1 from "/src/img/family1.jpg"
+import family2 from "/src/img/family2.jpg"
+import family3 from "/src/img/family3.jpg"
+import family5 from "/src/img/family5.jpg"
+import family6 from "/src/img/family6.jpg"
+import family7 from "/src/img/family7.jpg"
+import family8 from "/src/img/family8.jpg"
+import family9 from "/src/img/family9.jpg"
+import family10 from "/src/img/family10.jpg"
+import family11 from "/src/img/family11.jpg"
+import family12 from "/src/img/family12.jpg"
+import family13 from "/src/img/family13.jpg"
+import family14 from "/src/img/family14.jpg"
+import family15 from "/src/img/family15.jpg"
+import family16 from "/src/img/family16.jpg"
+import family17 from "/src/img/family17.jpg"
+import family18 from "/src/img/family18.jpg"
+import family20 from "/src/img/family20.png"
+
 export const CardImages = [
   {
-    src: "src/img/family1.jpg",
+    src: family1,
     matched: false,
   },
   {
-    src: "src/img/family2.jpg",
+    src: family2,
     matched: false,
   },
   {
-    src: "src/img/family3.jpg",
+    src: family3,
     matched: false,
   },
   {
-    src: "src/img/family5.jpg",
+    src: family5,
     matched: false,
   },
   {
-    src: "src/img/family6.jpg",
+    src: family6,
     matched: false,
   },
   {
-    src: "src/img/family7.jpg",
+    src: family7,
     matched: false,
   },
   {
-    src: "src/img/family8.jpg",
+    src: family8,
     matched: false,
   },
   {
-    src: "src/img/family9.jpg",
+    src: family9,
     matched: false,
   },
   {
-    src: "src/img/family10.jpg",
+    src: family10,
     matched: false,
   },
   {
-    src: "src/img/family11.jpg",
+    src: family11,
     matched: false,
   },
   {
-    src: "src/img/family12.jpg",
+    src: family12,
     matched: false,
   },
   {
-    src: "src/img/family13.jpg",
+    src: family13,
     matched: false,
   },
   {
-    src: "src/img/family14.jpg",
+    src: family14,
     matched: false,
   },
   {
-    src: "src/img/family15.jpg",
+    src: family15,
     matched: false,
   },
   {
-    src: "src/img/family17.jpg",
+    src: family16,
     matched: false,
   },
   {
-    src: "src/img/family18.jpg",
+    src: family17,
     matched: false,
   },
   {
-    src: "src/img/family19.png",
+    src: family18,
     matched: false,
   },
   {
-    src: "src/img/family20.png",
+    src: family20,
     matched: false,
   },
 ];
