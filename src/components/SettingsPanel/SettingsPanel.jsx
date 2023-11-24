@@ -1,25 +1,7 @@
-import { Radio } from "antd";
+import { SettingsPicker } from "../SettingsPicker/SettingsPicker";
 import styles from "./SettingsPanel.module.css";
-import { Button, Input, Space } from "antd";
+import { FieldSizeOptions, TimeControlOptions, TurnsControlOptions } from "../../utils";
 
-const timeControlOptions = [
-  { label: "без таймера", value: 0 },
-  { label: "3 минуты", value: 3 },
-  { label: "5 минут", value: 5 },
-];
-
-const turnsControlOptions = [
-  { label: "без ограничений", value: 10000000000000000 },
-  { label: "20 ходов", value: 20 },
-  { label: "40 ходов", value: 40 },
-];
-
-
-const fieldSizeOptions = [
-  { label: "4x4", value: 16 },
-  { label: "4x5", value: 20 },
-  { label: "6x6", value: 36 },
-];
 
 export default function SettingsPanel({
   onChangeTimeControl,
@@ -32,7 +14,7 @@ export default function SettingsPanel({
   onSubmitName,
   showWelcome,
   onChangeTurnsNumber,
-  turnsNumber
+  turnsNumber,
 }) {
   return (
     <div className={styles.wrapper}>
@@ -41,52 +23,48 @@ export default function SettingsPanel({
       ) : (
         <div>
           <p>Введите имя:</p>
-          <Space.Compact style={{ width: "100%" }}>
-            <Input
+          <div className={styles.inputWraper}>
+            <input
+            className={styles.nameInput}
               onChange={onChangeName}
-              value={userName}
+              type="text"
+              placeholder="Имя"
               disabled={disableChoice}
             />
-            <Button
+            <button
               onClick={onSubmitName}
-              disabled={disableChoice}
-              type="default"
+              className={styles.sendBtn}
+              disabled={disableChoice || !userName.trim()}
             >
               Отправить
-            </Button>
-          </Space.Compact>
+            </button>
+          </div>
         </div>
       )}
-      <div>
-        <p>Установить размер поля:</p>
-        <Radio.Group
-          options={fieldSizeOptions}
-          onChange={onChangeFieldSize}
-          value={fieldSize}
-          optionType="button"
-          disabled={disableChoice}
-        />
-      </div>
-      <div>
-        <p>Установить таймер игры:</p>
-        <Radio.Group
-          options={timeControlOptions}
-          onChange={onChangeTimeControl}
-          value={timeControl}
-          optionType="button"
-          disabled={disableChoice}
-        />
-      </div>
-      <div>
-        <p>Установить ограничение ходов:</p>
-        <Radio.Group
-          options={turnsControlOptions}
-          onChange={onChangeTurnsNumber}
-          value={turnsNumber}
-          optionType="button"
-          disabled={disableChoice}
-        />
-      </div>
+      <SettingsPicker
+        text="Установить размер поля:"
+        options={FieldSizeOptions}
+        onChange={onChangeFieldSize}
+        inputName="fieldSize"
+        selectedOption={fieldSize}
+        disableChoice={disableChoice}
+      />
+      <SettingsPicker
+        text="Установить ограничение времени:"
+        options={TimeControlOptions}
+        onChange={onChangeTimeControl}
+        inputName="timer"
+        selectedOption={timeControl}
+        disableChoice={disableChoice}
+      />
+      <SettingsPicker
+        text="Установить ограничение ходов:"
+        options={TurnsControlOptions}
+        onChange={onChangeTurnsNumber}
+        inputName="turns"
+        selectedOption={turnsNumber}
+        disableChoice={disableChoice}
+      />
     </div>
   );
 }

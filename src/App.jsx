@@ -1,150 +1,69 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import SingleCard from "./components/SingleCard/SingleCard";
 import ModalWindow from "./components/ModalWindow/ModalWindow";
 import SettingsPanel from "./components/SettingsPanel/SettingsPanel";
+import { GameField } from "./components/GameField/GameField";
+import { CardImages } from "./utils";
 
-const cardImages16 = [
-  {
-    src: "src/img/family2.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family1.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family3.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family19.png",
-    matched: false,
-  },
-  {
-    src: "src/img/family5.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family6.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family7.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family8.jpg",
-    matched: false,
-  },
-];
-
-const cardImages20 = [
-  {
-    src: "src/img/family17.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family18.jpg",
-    matched: false,
-  },
-];
-
-const cardImages36 = [
-  {
-    src: "src/img/family9.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family10.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family11.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family12.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family13.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family14.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family15.jpg",
-    matched: false,
-  },
-  {
-    src: "src/img/family20.png",
-    matched: false,
-  },
-];
 
 function App() {
   const [isGameOn, setIsGameOn] = useState(false);
+  const [cardsDisabled, setCardsDisabled] = useState(true);
 
   const [cards, setCards] = useState([]);
-  const [cardsDisabled, setCardsDisabled] = useState(true);
+  const [startAnimation, setStartAnimation] = useState(false);
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
   const [turns, setTurns] = useState(0);
 
-  const [fieldSize, setFieldSize] = useState(16);
+  const [fieldSize, setFieldSize] = useState("16");
   const [userName, setUserName] = useState("");
   const [showWelcome, setShowWelcome] = useState(false);
 
-  const [timeControl, setTimeControl] = useState(0);
+  const [timeControl, setTimeControl] = useState("0");
   const [counter, setCounter] = useState(0);
+  const [timeSpent, setTimeSpent] = useState(0);
 
-  const [turnsNumber, setTurnsNumber] = useState(10000000000000000);
+  const [maxTurnsNumber, setMaxTurnsNumber] = useState("10000000000000000");
 
   const [isWinModalOpen, setIsWinModalOpen] = useState(false);
   const [isFailModalOpen, setIsFailModalOpen] = useState(false);
 
   const shuffleCards = () => {
-    if (fieldSize === 16) {
-      const shuffledCards = [...cardImages16, ...cardImages16]
+    const createUniqueCardsArray = (allCards, endNumber) => {
+      return allCards.sort(() => Math.random() - 0.5).slice(0, endNumber);
+    };
+
+    const createPairedCardsArray = (uniqueCards) => {
+      return [...uniqueCards, ...uniqueCards]
         .sort(() => Math.random() - 0.5)
-        .map((card) => ({ ...card, id: Math.random() }));
+        .map((card) => ({
+          ...card,
+          id: Math.random(),
+        }));
+    };
+
+    const reset = (shuffledCards) => {
       setChoiceOne(null);
       setChoiceTwo(null);
       setCards(shuffledCards);
       setTurns(0);
+    };
+
+    if (fieldSize === "16") {
+      const cardsForGame = createUniqueCardsArray(CardImages, 8);
+      const shuffledCards = createPairedCardsArray(cardsForGame);
+      reset(shuffledCards);
     }
-    if (fieldSize === 20) {
-      const shuffledCards = [
-        ...cardImages16,
-        ...cardImages16,
-        ...cardImages20,
-        ...cardImages20,
-      ]
-        .sort(() => Math.random() - 0.5)
-        .map((card) => ({ ...card, id: Math.random() }));
-      setChoiceOne(null);
-      setChoiceTwo(null);
-      setCards(shuffledCards);
-      setTurns(0);
+    if (fieldSize === "20") {
+      const cardsForGame = createUniqueCardsArray(CardImages, 10);
+      const shuffledCards = createPairedCardsArray(cardsForGame);
+      reset(shuffledCards);
     }
-    if (fieldSize === 36) {
-      const shuffledCards = [
-        ...cardImages16,
-        ...cardImages16,
-        ...cardImages20,
-        ...cardImages20,
-        ...cardImages36,
-        ...cardImages36,
-      ]
-        .sort(() => Math.random() - 0.5)
-        .map((card) => ({ ...card, id: Math.random() }));
-      setChoiceOne(null);
-      setChoiceTwo(null);
-      setCards(shuffledCards);
-      setTurns(0);
+    if (fieldSize === "36") {
+      const cardsForGame = createUniqueCardsArray(CardImages, 18);
+      const shuffledCards = createPairedCardsArray(cardsForGame);
+      reset(shuffledCards);
     }
   };
 
@@ -161,14 +80,12 @@ function App() {
   };
 
   const onChangeTurnsNumber = ({ target: { value } }) => {
-    setTurnsNumber(value);
+    setMaxTurnsNumber(value);
   };
 
   const onChangeUserName = ({ target: { value } }) => {
     setUserName(value);
   };
-
-  
 
   const onSubmitName = () => {
     setShowWelcome(true);
@@ -185,6 +102,7 @@ function App() {
   useEffect(() => {
     if (isGameOn && counter === 0) {
       setIsFailModalOpen(true);
+      setIsGameOn(false);
     }
     const timer =
       counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
@@ -192,7 +110,16 @@ function App() {
   }, [counter]);
 
   useEffect(() => {
-    if (turns > turnsNumber) setIsFailModalOpen(true)
+    const timer =
+      isGameOn && setInterval(() => setTimeSpent(timeSpent + 1), 1000);
+    return () => clearInterval(timer);
+  }, [timeSpent, isGameOn]);
+
+  useEffect(() => {
+    if (turns > maxTurnsNumber) {
+      setIsFailModalOpen(true);
+      setIsGameOn(false);
+    }
   }, [turns]);
 
   useEffect(() => {
@@ -212,6 +139,7 @@ function App() {
           ).length;
           if (hasUnmatched === 0) {
             setIsWinModalOpen(true);
+            setIsGameOn(false);
           }
           return matchedCards;
         });
@@ -229,18 +157,22 @@ function App() {
     setCardsDisabled(false);
   };
 
-  const gridStyle =
-    fieldSize === 16
-      ? "card-grid-16"
-      : fieldSize === 20
-      ? "card-grid-20"
-      : "card-grid-36";
+  const onGameStart = () => {
+    shuffleCards();
+    setIsGameOn(true);
+    setCounter(+timeControl * 60);
+    setTimeSpent(0);
+    setCardsDisabled(false);
+    setStartAnimation(true);
+  }
 
+  const gameTime = Math.floor(timeSpent / 60) + ":" + (timeSpent % 60);
 
   return (
     <>
       <div className="App">
-        <h1>Найди Семью Memory Game</h1>
+        <h1 className="heading">Найди Семью Memory Game</h1>
+        <div className="settings-container">
         <SettingsPanel
           onChangeTimeControl={onChangeTimeControl}
           timeControl={timeControl}
@@ -252,62 +184,50 @@ function App() {
           onSubmitName={onSubmitName}
           showWelcome={showWelcome}
           onChangeTurnsNumber={onChangeTurnsNumber}
-          turnsNumber={turnsNumber}
+          turnsNumber={maxTurnsNumber}
         />
-        <div className="game-topbar">
-          <p>Turns: {turns}{(turnsNumber === 20 || turnsNumber === 40)  && ` из ${turnsNumber}`}</p>
-          <button
-            onClick={() => {
-              shuffleCards();
-              setIsGameOn(true);
-              setCounter(timeControl * 60);
-              setCardsDisabled(false);
-            }}
-          >
-            {isGameOn ? "Начать заново" : "Начать"}
-          </button>
-
-          {counter !== 0 && isGameOn && (
-            <div>
-              Оставшееся время: {Math.floor(counter / 60)}:{counter % 60}
-            </div>
-          )}
         </div>
-        <div className={gridStyle}>
-          {cards.map((card) => (
-            <SingleCard
-              key={card.id}
-              card={card}
-              handleChoice={handleСardChoice}
-              flipped={
-                (card === choiceOne || card === choiceTwo || card.matched) &&
-                isGameOn
-              }
-              disabled={cardsDisabled}
-            />
-          ))}
-        </div>
+        <GameField
+          cards={cards}
+          choiceOne={choiceOne}
+          choiceTwo={choiceTwo}
+          turns={turns}
+          maxTurnsNumber={maxTurnsNumber}
+          counter={counter}
+          onGameStart={onGameStart}
+          handleСardChoice={handleСardChoice}
+          startAnimation={startAnimation}
+          isGameOn={isGameOn}
+          cardsDisabled={cardsDisabled}
+          fieldSize={fieldSize}
+        />
       </div>
 
       <ModalWindow
-        text="Поздравляем! Вы выиграли!"
+        text="Поздравляем, Вы выиграли!"
+        turns={turns}
+        timeSpent={gameTime}
         open={isWinModalOpen}
         onClose={() => {
           setTurns(0);
           setIsWinModalOpen(false);
           setCardsDisabled(true);
-          setIsGameOn(false);
         }}
       />
 
       <ModalWindow
-        text="Игра закончилась - удачи в следующий раз!"
+        text={
+          turns > maxTurnsNumber
+            ? "Количество ходов закончилось - удачи в следующий раз!"
+            : "Время истекло - удачи в следующий раз!"
+        }
+        turns={turns}
+        timeSpent={gameTime}
         open={isFailModalOpen}
         onClose={() => {
           setTurns(0);
           setIsFailModalOpen(false);
           setCardsDisabled(true);
-          setIsGameOn(false);
         }}
       />
     </>

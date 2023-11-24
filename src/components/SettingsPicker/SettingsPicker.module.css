@@ -1,0 +1,48 @@
+.radioGroup {
+  display: inline-block;
+}
+
+.radioGroupItem {
+  display: inline-block;
+  cursor: pointer;
+  border: 1px solid #999;
+}
+
+.radioInput {
+  display: none;
+  padding: 6px 18px;
+}
+
+.radioLabel {
+  display: inline-block;
+  padding: 6px 18px;
+}
+
+.radioGroupItem:first-child {
+  border-radius: 6px 0 0 6px;
+}
+
+.radioGroupItem:last-child {
+  border-radius: 0 6px 6px 0;
+}
+
+/* Checked */
+.radioInput:checked + label {
+  background: #8f5295;
+}
+
+/* Hover */
+.radioLabel:hover {
+  cursor: pointer;
+  color: #dedde3;
+}
+
+/* Disabled */
+.radioInput:disabled + label {
+  background: #7a3d80;
+  color: #a9a9a9;
+}
+
+.settingsText {
+  margin-bottom: 10px;
+}

@@ -5,7 +5,10 @@ body {
   font-family: Raleway, sans-serif;
   margin: 0;
   font-size: 1.5em;
-  text-align: center;
-  background: #1b1523;
+  background: #56085c;
   color: #fff;
+}
+
+* {
+  box-sizing: border-box;
 }
