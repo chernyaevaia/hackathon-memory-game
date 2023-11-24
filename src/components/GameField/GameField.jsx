@@ -64,6 +64,7 @@ export function GameField({
               isGameOn
             }
             disabled={cardsDisabled}
+            fieldSize={fieldSize}
           />
         ))}
       </div>

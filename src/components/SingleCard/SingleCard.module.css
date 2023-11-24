@@ -10,17 +10,38 @@
   object-fit: cover;
 }
 
+.card36 img {
+  width: 120px;
+  height: 120px;
+  display: block;
+  border: 2px solid #fff;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
 .card .front {
   transform: rotateY(90deg);
   transition: all ease-in 0.2s;
   position: absolute;
 }
+
+.card36 .front {
+  transform: rotateY(90deg);
+  transition: all ease-in 0.2s;
+  position: absolute;
+}
+
+
 .flipped .front {
   transform: rotateY(0deg);
   transition-delay: 0.2s;
 }
 
 .card .back {
+  transition: all ease-in 0.2s;
+  transition-delay: 0.2s;
+}
+.card36 .back {
   transition: all ease-in 0.2s;
   transition-delay: 0.2s;
 }

@@ -8,6 +8,7 @@ export function SingleCard({
   flipped,
   disabled,
   startAnimation,
+  fieldSize,
 }) {
   const handleClick = () => {
     if (!disabled) {
@@ -16,7 +17,7 @@ export function SingleCard({
   };
 
   return (
-    <div className={styles.card}>
+    <div className={fieldSize === "36" ? styles.card36 : styles.card}>
       <div className={flipped ? styles.flipped : ""}>
         <img className={styles.front} src={card.src} alt="card front" />
         <img
