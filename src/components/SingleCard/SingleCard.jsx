@@ -1,5 +1,6 @@
 import styles from "./SingleCard.module.css";
 import cx from "classnames";
+import logo from "/src/img/nko-logo.svg"
 
 export function SingleCard({
   card,
@@ -22,7 +23,7 @@ export function SingleCard({
           className={
             startAnimation ? cx(styles.back, styles.callGradient) : styles.back
           }
-          src="/src/img/nko-logo.svg"
+          src={logo}
           alt="card back"
           onClick={handleClick}
         />
