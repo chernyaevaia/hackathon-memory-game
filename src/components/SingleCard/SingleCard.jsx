@@ -22,7 +22,7 @@ export function SingleCard({
           className={
             startAnimation ? cx(styles.back, styles.callGradient) : styles.back
           }
-          src="src/img/nko-logo.svg"
+          src="/src/img/nko-logo.svg"
           alt="card back"
           onClick={handleClick}
         />
