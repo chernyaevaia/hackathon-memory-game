@@ -16,6 +16,8 @@ export function GameField({
   counter,
   onGameStart,
 }) {
+
+  const secondsLeft = counter % 60 < 10 ? `0${counter % 60}` : counter % 60 
   return (
     <div className={styles.fieldContainer}>
       <div
@@ -38,7 +40,7 @@ export function GameField({
         </div>
         {counter !== 0 && isGameOn && (
           <div className={styles.timeCounter}>
-            Оставшееся время: {Math.floor(counter / 60)}:{counter % 60}
+            Оставшееся время: {Math.floor(counter / 60)}:{secondsLeft}
           </div>
         )}
       </div>
