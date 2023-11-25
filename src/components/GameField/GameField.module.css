@@ -26,6 +26,7 @@
 
 .gameTopbar {
   display: flex;
+  flex-direction: column;
 }
 
 .width16 {
@@ -56,12 +57,15 @@
   color: #fff;
 }
 
+.showSettingsContainer {
+  display: flex;
+  column-gap: 40px;
+}
+
 .turnsCounter {
-  position: absolute;
-  margin-left: 200px;
+  margin-top: 20px;
 }
 
 .timeCounter {
-  position: absolute;
-  margin-left: 460px;
+  margin-top: 20px;
 }

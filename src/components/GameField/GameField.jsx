@@ -16,8 +16,7 @@ export function GameField({
   counter,
   onGameStart,
 }) {
-
-  const secondsLeft = counter % 60 < 10 ? `0${counter % 60}` : counter % 60 
+  const secondsLeft = counter % 60 < 10 ? `0${counter % 60}` : counter % 60;
   return (
     <div className={styles.fieldContainer}>
       <div
@@ -30,19 +29,32 @@ export function GameField({
             : styles.width36
         )}
       >
-        <button className={styles.startBtn} onClick={onGameStart}>
-          {isGameOn ? "Начать заново" : "Начать"}
-        </button>
-        <div className={styles.turnsCounter}>
-          Ходы: {turns}
-          {(maxTurnsNumber === "20" || maxTurnsNumber === "40") &&
-            ` из ${maxTurnsNumber}`}
+        <div className={styles.showSettingsContainer}>
+          <button className={styles.startBtn} onClick={onGameStart}>
+            {isGameOn ? "Начать заново" : "Начать"}
+          </button>
+          {isGameOn && (
+            <button
+              className={styles.startBtn}
+              onClick={() => window.location.reload()}
+            >
+              Сбросить настройки
+            </button>
+          )}
         </div>
-        {counter !== 0 && isGameOn && (
-          <div className={styles.timeCounter}>
-            Оставшееся время: {Math.floor(counter / 60)}:{secondsLeft}
+
+        <div className={styles.showSettingsContainer}>
+          <div className={styles.turnsCounter}>
+            Ходы: {turns}
+            {(maxTurnsNumber === "20" || maxTurnsNumber === "40") &&
+              ` из ${maxTurnsNumber}`}
           </div>
-        )}
+          {counter !== 0 && isGameOn && (
+            <div className={styles.timeCounter}>
+              Оставшееся время: {Math.floor(counter / 60)}:{secondsLeft}
+            </div>
+          )}
+        </div>
       </div>
 
       <div
