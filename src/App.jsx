@@ -5,7 +5,6 @@ import SettingsPanel from "./components/SettingsPanel/SettingsPanel";
 import { GameField } from "./components/GameField/GameField";
 import { CardImages } from "./utils";
 
-
 function App() {
   const [isGameOn, setIsGameOn] = useState(false);
   const [cardsDisabled, setCardsDisabled] = useState(true);
@@ -164,28 +163,31 @@ function App() {
     setTimeSpent(0);
     setCardsDisabled(false);
     setStartAnimation(true);
-  }
+  };
 
-  const gameTime = Math.floor(timeSpent / 60) + ":" + (timeSpent % 60);
+  const gameTime =
+    Math.floor(timeSpent / 60) +
+    ":" +
+    (timeSpent % 60 < 10 ? "0" + (timeSpent % 60) : timeSpent % 60);
 
   return (
     <>
       <div className="App">
         <h1 className="heading">Найди Семью Memory Game</h1>
         <div className="settings-container">
-        <SettingsPanel
-          onChangeTimeControl={onChangeTimeControl}
-          timeControl={timeControl}
-          fieldSize={fieldSize}
-          disableChoice={isGameOn}
-          onChangeFieldSize={onChangeFieldSize}
-          onChangeName={onChangeUserName}
-          userName={userName}
-          onSubmitName={onSubmitName}
-          showWelcome={showWelcome}
-          onChangeTurnsNumber={onChangeTurnsNumber}
-          turnsNumber={maxTurnsNumber}
-        />
+          <SettingsPanel
+            onChangeTimeControl={onChangeTimeControl}
+            timeControl={timeControl}
+            fieldSize={fieldSize}
+            disableChoice={isGameOn}
+            onChangeFieldSize={onChangeFieldSize}
+            onChangeName={onChangeUserName}
+            userName={userName}
+            onSubmitName={onSubmitName}
+            showWelcome={showWelcome}
+            onChangeTurnsNumber={onChangeTurnsNumber}
+            turnsNumber={maxTurnsNumber}
+          />
         </div>
         <GameField
           cards={cards}
